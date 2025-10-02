@@ -1,0 +1,27 @@
+:root{
+  --bg: linear-gradient(135deg,#f9fafb 0%,#eef2ff 100%);
+  --card: rgba(255,255,255,.82);
+  --text:#111827; --muted:#6b7280; --border:rgba(0,0,0,.08); --primary:#6366f1; --primary-ink:#fff;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg: radial-gradient(1200px 800px at 20% -20%,#1f2937 0%,#0b0c10 60%); --card: rgba(17,24,39,.7); --text:#e5e7eb; --muted:#a1a1aa; --border:rgba(255,255,255,.1); --primary:#8b5cf6; --primary-ink:#0b0c10; }
+}
+*{box-sizing:border-box}
+body{font-family: ui-sans-serif,-apple-system,system-ui,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic","PingFang TC","Microsoft JhengHei",sans-serif; min-height:100vh; margin:0; padding:32px; background:var(--bg); color:var(--text);}
+.header{max-width:960px;margin:0 auto 16px;display:flex;align-items:center;gap:12px;}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#22d3ee);box-shadow:0 8px 20px rgba(99,102,241,.35);}
+.title h1{font-size:22px;margin:0;}
+.title p{margin:2px 0 0;color:var(--muted);font-size:13px;}
+.card{max-width:960px;margin:0 auto;padding:22px 22px 26px;border:1px solid var(--border); background:var(--card); backdrop-filter: blur(10px); border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.12);}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 6px;}
+.kana{font-size:48px;font-weight:800;letter-spacing:1px;margin:20px 2px;min-height:52px;}
+.btn{padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:#fff;color:#111;cursor:pointer;transition:.18s transform,.18s box-shadow,.18s background;box-shadow:0 1px 1px rgba(0,0,0,.04);}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(0,0,0,.08);}
+.btn:active{transform:translateY(0);}
+.btn.primary{background:var(--primary);color:var(--primary-ink);border-color:transparent;}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:4px;}
+.meta{color:var(--muted);font-size:13px;margin-top:6px;}
+.reveal{font-size:18px;margin:8px 0;min-height:24px;}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;margin-left:8px;}
+.footer{max-width:960px;margin:14px auto 0;color:var(--muted);font-size:12px;text-align:center;}
+@media (max-width:520px){ body{padding:18px;} .kana{font-size:38px;} }
