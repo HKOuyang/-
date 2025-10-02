@@ -33,4 +33,23 @@
     document.getElementById('next').onclick = pickNext;
     if('serviceWorker' in navigator){ navigator.serviceWorker.register('service-worker.js'); }
   });
+
+  // Force Update button: unregister SW + clear caches + hard reload
+  var fu = document.getElementById('forceUpdate');
+  if (fu){
+    fu.onclick = function(){
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs){
+          regs.forEach(function(reg){ reg.unregister(); });
+          if (window.caches) {
+            caches.keys().then(function(keys){ keys.forEach(function(k){ caches.delete(k); }); });
+          }
+          setTimeout(function(){ location.reload(true); }, 300);
+        });
+      } else {
+        location.reload(true);
+      }
+    };
+  }
+
 })();
