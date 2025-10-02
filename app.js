@@ -1,9 +1,14 @@
+
 (function(){
   var pool=[], idx=-1, order=[];
+  function isKatakana(str){
+    // allow "・" and "ー" and spaces, and trailing "な"
+    return /^[\u30A0-\u30FFー・\s]+(な)?$/.test(str);
+  }
   function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
   function buildPool(){
     var onlyKata = document.getElementById('onlyKata').checked;
-    pool = DATA.filter(function(x){ return onlyKata ? (!x.kanji || x.kanji==='') : true; });
+    pool = DATA.filter(function(x){ return onlyKata ? isKatakana(x.kana || '') : true; });
     order = []; for(var i=0;i<pool.length;i++) order.push(i); shuffle(order);
   }
   function setBtns(flag){ ['showKanji','showRomaji','showBorrow','next'].forEach(function(id){ document.getElementById(id).disabled=!flag; }); }
