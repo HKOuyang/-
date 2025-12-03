@@ -232,21 +232,35 @@ function boldTitleAtStart(title, html){
 
 // split into entries by double-blank lines
 function parseBatch(raw){
-  const blocks = sanitize(raw).split(/\n\s*\n\s*\n/).map(b=>b.trim()).filter(Boolean);
+ function parseBatch(raw) {
   const entries = [];
-  for(let b of blocks){
-    const lines = b.split('\n');
-    // first non-empty line = title
-    let i=0; while(i<lines.length && !lines[i].trim()) i++;
-    const title = (lines[i]||'').trim();
-    i++;
-    while(i<lines.length && !lines[i].trim()) i++; // skip one or more blank lines
-    const desc = lines.slice(i).join('\n').trim();
-    if(title || desc) entries.push({title, desc});
-    if(entries.length===10) break;
+  const lines = raw.replace(/\r/g,'').split('\n');
+  let currentTitle = null;
+  let currentDesc = [];
+  function pushCurrent() {
+    if (currentTitle && currentDesc.length) {
+      entries.push({ title: currentTitle.trim(), desc: currentDesc.join('\n').trim() });
+    }
   }
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!currentTitle) {
+      if (trimmed) currentTitle = trimmed;
+      continue;
+    }
+    if (!trimmed) {
+      pushCurrent();
+      if (entries.length === 10) break;
+      currentTitle = null;
+      currentDesc = [];
+      continue;
+    }
+    currentDesc.push(line);
+  }
+  if (entries.length < 10) pushCurrent();
   return entries;
 }
+
 
 // build a hidden stage for rendering
 function buildStage(){
